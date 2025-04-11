@@ -1,0 +1,43 @@
+﻿name: Deploy docs to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: docs
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install MkDocs and Material Theme
+        run: pip install mkdocs-material mkdocs-include-markdown-plugin pymdown-extensions
+
+      - name: Configure Git for Deployment
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Deploy MkDocs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mkdocs gh-deploy --force --remote-name origin
