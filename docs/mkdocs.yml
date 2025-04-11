@@ -1,0 +1,36 @@
+﻿site_name: Berlingo
+theme:
+  name: material
+  logo: images/logo.png
+  favicon: images/logo.ico
+  palette:
+    primary: '#006aa7'
+    accent: '#e67e22'
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - include-markdown:
+      encoding: utf-8
+
+markdown_extensions:
+  - pymdownx.superfences
+  - codehilite:
+      guess_lang: false
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+
+repo_url: https://github.com/berlingoextension/berlingo
+repo_name: Source code
+
+extra_css:
+  - assets/custom.css
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - FAQ: faq.md
+  - Changelog: changelog.md

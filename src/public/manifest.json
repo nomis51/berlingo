@@ -1,0 +1,47 @@
+﻿{
+  "name": "Berlingo",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "Duolingo solver",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.duolingo.com/*"
+      ],
+      "js": [
+        "init.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "images/icons/icon-16.png",
+    "32": "images/icons/icon-32.png",
+    "48": "images/icons/icon-48.png",
+    "60": "images/icons/icon-60.png",
+    "128": "images/icons/icon-128.png",
+    "256": "images/icons/icon-256.png"
+  },
+  "action": {
+    "default_title": "Berlingo",
+    "default_popup": "ui/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

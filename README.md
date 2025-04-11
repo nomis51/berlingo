@@ -1,2 +1,1 @@
-# berlingo
-Duolingo challenge solver
+
