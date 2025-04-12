@@ -22,7 +22,7 @@ class IpcServiceImpl {
         return message.id;
     }
 
-    public sendAndReceiveMessage<T>(type: string, data: T | undefined = undefined): Promise<T> {
+    public sendAndReceiveMessage<TIn, TOut>(type: string, data: TIn | undefined = undefined): Promise<TOut> {
         LoggerService.debug("[IPC] sendAndReceiveMessage", type, data);
 
         return new Promise(async (resolve) => {
@@ -30,7 +30,7 @@ class IpcServiceImpl {
                 if (e.data.type !== type || e.data.id !== id) return;
 
                 window.removeEventListener("message", receiver);
-                resolve(e.data.data as T);
+                resolve(e.data.data as TOut);
             }
 
             window.addEventListener("message", receiver);
