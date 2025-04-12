@@ -24,7 +24,7 @@ export abstract class Page {
         this._components.forEach(component => component.dispose());
     }
 
-    public addComponent(component: Component): Component {
+    public addComponent<T extends Component>(component: T): T {
         this._components.push(component);
         return component;
     }

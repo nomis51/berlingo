@@ -11,7 +11,7 @@ export class HomePage extends Page {
 
         LoggerService.debug("Rendering home page");
 
-        const testAlert = this.addComponent(new AlertComponent("Berlingo v0.1.0"));
+        const testAlert = this.addComponent(new AlertComponent("Berlingo v0.1.0", "success"));
         testAlert.customStyle = `<style>
         .wrapper {
            position: fixed;

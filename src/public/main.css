@@ -1,8 +1,13 @@
 ﻿:root {
     --duolingo-green: #93d333;
     --duolingo-green-dark: rgb(121, 185, 51);
+    --duolingo-blue: #1cb0f6;
+    --duolingo-red: #ee5555;
+    --duolingo-yellow: #ffc700;
+
     --duolingo-button-text-dark: #131f24;
     --duolingo-button-text-light: #fff;
+
     --duolingo-font-family: din-round, sans-serif;
 }
 

@@ -9,6 +9,7 @@ class DuolingoServiceImpl {
      */
     private _profileData: ProfileData | undefined;
     private readonly _solver: DuolingoSolver = new DuolingoSolver();
+    private _isSolving: boolean = false;
 
     /**
      * Props
@@ -41,7 +42,18 @@ class DuolingoServiceImpl {
     }
 
     public async solveChallenge(): Promise<void> {
+        if (this._isSolving) return;
+
+        LoggerService.info("Solving challenge");
+        this._isSolving = true;
         await this._solver.solve();
+        this._isSolving = false;
+    }
+
+    public getChallengeAnswer(): string {
+        const answer = this._solver.getAnswer();
+        LoggerService.info("Answer: ", answer);
+        return answer;
     }
 }
 

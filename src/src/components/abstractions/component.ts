@@ -7,7 +7,12 @@ export abstract class Component {
     public readonly name: string;
     protected readonly _id: string | undefined;
     private _container: HTMLDivElement | undefined;
+    private _shadow: ShadowRoot | undefined;
     public customStyle: string = "";
+
+    public get contentContainer(): HTMLDivElement | undefined {
+        return this._shadow?.querySelector(".wrapper-content") ?? undefined;
+    }
 
     /**
      * Constructor
@@ -35,25 +40,20 @@ export abstract class Component {
         this._container.classList.add(this.name);
         this._container.id = this._id ?? "";
 
-        const shadow = this._container.attachShadow({mode: "open"});
+        this._shadow = this._container.attachShadow({mode: "open"});
         const wrapper = document.createElement("div");
         wrapper.classList.add("wrapper");
         wrapper.innerHTML = `
-<style>
-    :host {
-        all: initial;
+            <style>
+                :host {
+                    all: initial;
+                }
+                ${style.replace(/^<style>|<\/style>$/gi, "")}${this.customStyle.replace(/^<style>|<\/style>$/gi, "")}
+            </style>
+            <div class="wrapper-content">${html}</div>
+            `;
+
+        this._shadow.appendChild(wrapper);
+        return [this._container, this._shadow];
     }
-    ${style.replace(/^<style>|<\/style>$/gi, "")}${this.customStyle.replace(/^<style>|<\/style>$/gi, "")}
-</style>
-<div class="wrapper-content">${html}</div>
-`;
-
-        shadow.appendChild(wrapper);
-        return [this._container, shadow];
-    }
-
-    /**
-     * Private functions
-     */
-
 }

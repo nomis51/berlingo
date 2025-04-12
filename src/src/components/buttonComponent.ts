@@ -1,20 +1,19 @@
 ﻿import {Component} from "./abstractions/component";
+import {LoggerService} from "../content/services/loggerService";
 
 export class ButtonComponent extends Component {
     /**
      * Members
      */
     private _text: string;
-    private readonly _onClick: () => void;
 
     /**
      * Constructors
      */
-    constructor(text: string, onClick: () => void, id: string = "") {
+    constructor(text: string, id: string = "") {
         super("button", id);
 
         this._text = text;
-        this._onClick = onClick;
     }
 
     /**
@@ -46,11 +45,44 @@ export class ButtonComponent extends Component {
                 box-shadow: none;
                 transform: translate(0, 4px);
             }
+            
+            button:hover {
+               filter: brightness(1.1); 
+            }
             </style>`
         );
 
-        shadow.addEventListener("click", this._onClick);
-
         return container;
+    }
+
+    public addEventListener(event: string, callback: () => void) {
+        this.contentContainer?.querySelector("button")?.addEventListener(event, callback);
+    }
+
+    public removeEventListener(event: string, callback: () => void) {
+        this.contentContainer?.querySelector("button")?.removeEventListener(event, callback);
+    }
+
+    public setDisabled(disabled: boolean) {
+        const button = this.contentContainer?.querySelector("button");
+        if (!button) return;
+
+        button.disabled = disabled;
+
+        if (disabled) {
+            button.style.opacity = "0.5";
+            button.style.cursor = "not-allowed";
+        } else {
+            button.style.opacity = "1";
+            button.style.cursor = "pointer";
+        }
+    }
+
+    public setText(text: string) {
+        const button = this.contentContainer?.querySelector("button");
+        if (!button) return;
+
+        this._text = text;
+        button.textContent = text;
     }
 }
