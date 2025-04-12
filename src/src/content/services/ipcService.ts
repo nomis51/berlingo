@@ -1,6 +1,7 @@
 ﻿import {generateRandomId} from "../helpers/randomId";
 import {IpcMessage} from "../types/ipc/ipcMessage";
 import {LoggerService} from "./loggerService";
+import {IpcMessageTypeValue} from "../types/ipc/ipcMessageType";
 
 class IpcServiceImpl {
     /**
@@ -11,23 +12,33 @@ class IpcServiceImpl {
     /**
      * Public function
      */
-    public async sendMessage<T>(type: string, data: T | undefined = undefined): Promise<string> {
+    public async sendMessage<T>(type: IpcMessageTypeValue, data: T | undefined = undefined): Promise<string> {
         LoggerService.debug("[IPC] sendMessage", type, data);
         const message: IpcMessage<T> = {
             id: generateRandomId(),
-            type,
+            type: type.request,
             data
         };
         window.postMessage(message);
         return message.id;
     }
 
-    public sendAndReceiveMessage<TIn, TOut>(type: string, data: TIn | undefined = undefined): Promise<TOut> {
+    public async responseMessage<T>(id: string, type: IpcMessageTypeValue, data: T | undefined = undefined): Promise<void> {
+        LoggerService.debug("[IPC] responseMessage", type, data);
+        const message: IpcMessage<T> = {
+            id,
+            type: type.response,
+            data
+        };
+        window.postMessage(message);
+    }
+
+    public sendAndReceiveMessage<TIn, TOut>(type: IpcMessageTypeValue, data: TIn | undefined = undefined): Promise<TOut> {
         LoggerService.debug("[IPC] sendAndReceiveMessage", type, data);
 
         return new Promise(async (resolve) => {
             function receiver(e: MessageEvent) {
-                if (e.data.type !== type || e.data.id !== id) return;
+                if (e.data.type !== type.response || e.data.id !== id) return;
 
                 window.removeEventListener("message", receiver);
                 resolve(e.data.data as TOut);
@@ -38,10 +49,10 @@ class IpcServiceImpl {
         });
     }
 
-    public addListener<T>(type: string, callback: (e: IpcMessage<T>) => void): string {
+    public addListener<T>(type: IpcMessageTypeValue, callback: (e: IpcMessage<T>) => void): string {
         LoggerService.debug("[IPC] addListener", type);
         const id = generateRandomId();
-        const wrapper = (e: MessageEvent<any>) => e.data.type === type && callback(e.data);
+        const wrapper = (e: MessageEvent<any>) => e.data.type === type.request && callback(e.data);
         window.addEventListener("message", wrapper);
         this._listeners.set(id, wrapper);
         return id;

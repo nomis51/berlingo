@@ -1,12 +1,14 @@
 ﻿import {LoggerService} from "../content/services/loggerService";
 import {ReactService} from "./reactService";
 import {Course, ProfileData} from "../types/duolingo/ProfileData";
+import {DuolingoSolver} from "../duolingo/duolingoSolver";
 
 class DuolingoServiceImpl {
     /**
      * Members
      */
     private _profileData: ProfileData | undefined;
+    private readonly _solver: DuolingoSolver = new DuolingoSolver();
 
     /**
      * Props
@@ -36,6 +38,10 @@ class DuolingoServiceImpl {
 
         this._profileData = ReactService.findReactFiberWithPropName<ProfileData>("username");
         return this.hasProfileData;
+    }
+
+    public async solveChallenge(): Promise<void> {
+        await this._solver.solve();
     }
 }
 

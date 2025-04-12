@@ -3,6 +3,8 @@
      * Public functions
      */
     public async get<T>(key: string): Promise<T | undefined> {
+        if (!key) return;
+
         try {
             const value = await chrome.storage.local.get(key);
             if (!value) return;
@@ -14,6 +16,8 @@
     }
 
     public async set(key: string, value: any): Promise<void> {
+        if (!key) return;
+       
         try {
             await chrome.storage.local.set({[key]: value});
         } catch (e: any) {

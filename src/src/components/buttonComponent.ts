@@ -36,7 +36,7 @@ export class ButtonComponent extends Component {
                 border: none !important;
                 padding: 15px 16px;
                 box-shadow: 0 4px 0 var(--duolingo-green-dark);
-                border-radius: 12px;
+                border-radius: 16px;
                 cursor: pointer;
                 height: 46px;
                 max-height: 46px;

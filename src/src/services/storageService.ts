@@ -6,11 +6,13 @@ class StorageServiceImpl {
      * Public functions
      */
     public async get<T>(key: string): Promise<T | undefined> {
-        return await IpcService.sendAndReceiveMessage<string, T>(IpcMessageType.getStorage.request, key)
+        if (!key) return;
+        return await IpcService.sendAndReceiveMessage<string, T>(IpcMessageType.getStorage, key)
     }
 
     public async set(key: string, value: any): Promise<void> {
-        await IpcService.sendMessage<{ key: string, value: any }>(IpcMessageType.setStorage.request, {key, value});
+        if (!key) return;
+        await IpcService.sendMessage<{ key: string, value: any }>(IpcMessageType.setStorage, {key, value});
     }
 }
 
