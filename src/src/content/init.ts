@@ -19,6 +19,7 @@ IpcService.addListener<GetStorageRequest>(IpcMessageType.getStorage.request, asy
 });
 
 function injectStylesheet() {
+    LoggerService.debug("Injecting stylesheet");
     const stylesheet = document.createElement("link");
     stylesheet.setAttribute("rel", "stylesheet")
     stylesheet.setAttribute("type", "text/css")
@@ -28,6 +29,7 @@ function injectStylesheet() {
 }
 
 function injectScript() {
+    LoggerService.debug("Injecting script");
     const body = document.body;
     const script = document.createElement("script");
     script.setAttribute("type", "module");

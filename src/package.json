@@ -6,6 +6,11 @@
   "repository": "https://github.com/nomis51/berlingo",
   "author": "nomis51",
   "license": "GPL-3.0-only",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "build": "webpack --config webpack.config.js && yarn tw",
+    "tw": "npx @tailwindcss/cli -i ./public/popup/index.css -o ../dist/popup/index.css"
+  },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.3",
     "@types/chrome": "^0.0.315",
