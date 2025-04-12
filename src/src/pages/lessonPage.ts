@@ -20,10 +20,14 @@ export class LessonPage extends Page {
         container.style.flexDirection = "row";
         container.style.gap = "4px";
 
-        const showAnswer = this.addComponent(new ButtonComponent("Show answer"));
+        const showAnswer = this.addComponent(new ButtonComponent("Show answer", () => {
+            LoggerService.info("Show answer button clicked");
+        }));
         container.insertBefore(showAnswer.render(), playerNextButton);
 
-        const solveButton = this.addComponent(new ButtonComponent("Solve"));
+        const solveButton = this.addComponent(new ButtonComponent("Solve", () => {
+            LoggerService.info("Solve button clicked");
+        }));
         container.insertBefore(solveButton.render(), playerNextButton);
     }
 

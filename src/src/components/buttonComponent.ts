@@ -5,14 +5,16 @@ export class ButtonComponent extends Component {
      * Members
      */
     private _text: string;
+    private readonly _onClick: () => void;
 
     /**
      * Constructors
      */
-    constructor(text: string, id: string = "") {
+    constructor(text: string, onClick: () => void, id: string = "") {
         super("button", id);
 
         this._text = text;
+        this._onClick = onClick;
     }
 
     /**
@@ -47,7 +49,7 @@ export class ButtonComponent extends Component {
             </style>`
         );
 
-        // TODO: add event listeners to shadow
+        shadow.addEventListener("click", this._onClick);
 
         return container;
     }
