@@ -10,7 +10,7 @@ module.exports = {
         background: path.resolve(__dirname, "src", "background.ts"),
         popup: path.resolve(__dirname, "src", "ui", "popup.ts"),
         init: path.resolve(__dirname, "src", "content", "init.ts"),
-        main: path.resolve(__dirname, "src", "main.ts"),
+        extension: path.resolve(__dirname, "src", "content", "extension.ts"),
     },
     output: {
         clean: true,
@@ -18,7 +18,7 @@ module.exports = {
         filename: (pathData) => {
             const name = pathData.chunk.name;
             if (name === "popup") return "ui/[name].js"
-            if (name === "init") return "content/[name].js"
+            if (name === "init") return 
             return "[name].js";
         }
     },

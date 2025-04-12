@@ -17,7 +17,7 @@
         "*://*.duolingo.com/*"
       ],
       "js": [
-        "content/init.js"
+        "init.js"
       ],
       "all_frames": true
     }
