@@ -5,7 +5,7 @@ store.
 But, you can still use it by installing it manually, here are the steps :
 
 - Download the latest version of the `berlingo.1.2.3.zip` on
-  the [release page](https://github.com/nomis51/berlingo/releases/latest) (where ``1.2.3` is the version number)
+  the [release page](https://github.com/nomis51/berlingo/releases/latest) (where `1.2.3` is the version number)
 - Go to your browser
 - Go to `Settings`
 - Go to `Extensions`
