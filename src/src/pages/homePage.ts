@@ -12,7 +12,7 @@ export class HomePage extends Page {
 
         LoggerService.debug("Rendering home page");
 
-        if (DuolingoService.loadProfileData()) {
+        if (await DuolingoService.loadProfileData()) {
             LoggerService.debug("Profile data refreshed");
         }
 

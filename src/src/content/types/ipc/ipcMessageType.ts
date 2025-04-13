@@ -1,6 +1,7 @@
 ﻿export const IpcMessageType = {
     getStorage: createIpcMessageType("getStorage"),
-    setStorage: createIpcMessageType("setStorage")
+    setStorage: createIpcMessageType("setStorage"),
+    languageUpdated: createIpcMessageType("languageUpdated"),
 };
 
 

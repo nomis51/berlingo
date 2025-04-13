@@ -1,5 +1,6 @@
 import {StorageService} from "../content/services/storageService";
 import {StorageKey} from "../content/types/storage/storageKey";
+import {IpcMessageType} from "../content/types/ipc/ipcMessageType";
 
 const GITHUB_URL = "https://github.com/nomis51/berlingo";
 const WIKI_URL = "https://nomis51.github.io/berlingo"
@@ -43,5 +44,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.body.removeChild(a);
 
         URL.revokeObjectURL(url);
+    });
+
+    const labelLanguage = document.getElementById("label-language") as HTMLLabelElement;
+    labelLanguage.innerText = await StorageService.get<string>(StorageKey.language) ?? "";
+    if (!!labelLanguage.innerText) {
+        labelLanguage.style.display = "block";
+    }
+
+    chrome.runtime.onMessage.addListener((message: any, _, __) => {
+        if (message.type === IpcMessageType.languageUpdated.request) {
+            labelLanguage.innerText = message.data;
+            if (!labelLanguage.innerText) return;
+
+            labelLanguage.style.display = "block";
+        }
     });
 });

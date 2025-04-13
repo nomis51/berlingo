@@ -4,6 +4,7 @@ import {SetStorageRequest} from "./types/storage/setStorageRequest";
 import {GetStorageRequest} from "./types/storage/getStorageRequest";
 import {IpcMessageType} from "./types/ipc/ipcMessageType";
 import {LoggerService} from "./services/loggerService";
+import {IpcMessageProtocol} from "./types/ipc/ipcMessageProtocol";
 
 LoggerService.initialize();
 injectStylesheet();
@@ -12,11 +13,14 @@ injectScript();
 IpcService.addListener<SetStorageRequest>(IpcMessageType.setStorage, async e => {
     await StorageService.set(e.data!.key, e.data!.value);
     await IpcService.responseMessage(e.id, IpcMessageType.setStorage, true);
-});
+}, IpcMessageProtocol.Window);
 IpcService.addListener<GetStorageRequest>(IpcMessageType.getStorage, async e => {
     const value = await StorageService.get(e.data!.key);
     await IpcService.responseMessage(e.id, IpcMessageType.getStorage, value);
-});
+}, IpcMessageProtocol.Window);
+IpcService.addListener<string>(IpcMessageType.languageUpdated, async e => {
+    await IpcService.sendMessage(IpcMessageType.languageUpdated, e.data, IpcMessageProtocol.Chrome);
+}, IpcMessageProtocol.Window);
 
 function injectStylesheet() {
     LoggerService.debug("Injecting stylesheet");

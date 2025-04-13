@@ -2,6 +2,7 @@
 import {IpcMessage} from "../types/ipc/ipcMessage";
 import {LoggerService} from "./loggerService";
 import {IpcMessageTypeValue} from "../types/ipc/ipcMessageType";
+import {IpcMessageProtocol} from "../types/ipc/ipcMessageProtocol";
 
 class IpcServiceImpl {
     /**
@@ -12,14 +13,31 @@ class IpcServiceImpl {
     /**
      * Public function
      */
-    public async sendMessage<T>(type: IpcMessageTypeValue, data: T | undefined = undefined): Promise<string> {
-        LoggerService.debug("[IPC] sendMessage", type, data);
+    public async sendMessage<T>(type: IpcMessageTypeValue, data: T | undefined = undefined, protocol: IpcMessageProtocol = IpcMessageProtocol.Window): Promise<string> {
+        LoggerService.debug("[IPC] sendMessage", type, data, protocol);
         const message: IpcMessage<T> = {
             id: generateRandomId(),
             type: type.request,
             data
         };
-        window.postMessage(message);
+
+        if (protocol === IpcMessageProtocol.Window) {
+            window.postMessage(message);
+        } else if (protocol === IpcMessageProtocol.Chrome) {
+            try {
+                await chrome.runtime.sendMessage(message);
+            } catch (e: any) {
+                if (e.message && e.message.includes("Receiving end does not exist")) {
+                    // ignore, popup simply hasn't been opened yet
+                    LoggerService.debug("Receiving end didn't exists (chrome), ignoring");
+                } else {
+                    LoggerService.error("Failed to send message (chrome)", e);
+                }
+            }
+        } else {
+            throw new Error("Invalid protocol");
+        }
+
         return message.id;
     }
 
@@ -49,21 +67,37 @@ class IpcServiceImpl {
         });
     }
 
-    public addListener<T>(type: IpcMessageTypeValue, callback: (e: IpcMessage<T>) => void): string {
+    public addListener<T>(type: IpcMessageTypeValue, callback: (e: IpcMessage<T>) => void, protocol: IpcMessageProtocol = IpcMessageProtocol.Window): string {
         LoggerService.debug("[IPC] addListener", type);
         const id = generateRandomId();
-        const wrapper = (e: MessageEvent<any>) => e.data.type === type.request && callback(e.data);
-        window.addEventListener("message", wrapper);
-        this._listeners.set(id, wrapper);
-        return id;
+
+        if (protocol === IpcMessageProtocol.Window) {
+
+            const wrapper = (e: MessageEvent<any>) => e.data.type === type.request && callback(e.data);
+            window.addEventListener("message", wrapper);
+            this._listeners.set(id, wrapper);
+            return id;
+        } else if (protocol === IpcMessageProtocol.Chrome) {
+            const wrapper = (e: any, _: chrome.runtime.MessageSender, __: (response?: any) => void) => e.type === type.request && callback(e.data);
+            chrome.runtime.onMessage.addListener(wrapper);
+            this._listeners.set(id, wrapper);
+            return id;
+        } else {
+            throw new Error("Invalid protocol");
+        }
     }
 
-    public removeListener(id: string): void {
+    public removeListener(id: string, protocol: IpcMessageProtocol = IpcMessageProtocol.Window): void {
         LoggerService.debug("[IPC] removeListener", id);
         const wrapper = this._listeners.get(id);
         if (!wrapper) return;
 
-        window.removeEventListener("message", wrapper);
+        if (protocol === IpcMessageProtocol.Window) {
+            window.removeEventListener("message", wrapper);
+        } else if (protocol === IpcMessageProtocol.Chrome) {
+            chrome.runtime.onMessage.removeListener(wrapper);
+        }
+
         this._listeners.delete(id);
     }
 }

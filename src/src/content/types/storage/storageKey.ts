@@ -1,4 +1,5 @@
 ﻿export const StorageKey = {
     settings: "settings",
-    logs: "logs"
+    logs: "logs",
+    language: "language",
 }

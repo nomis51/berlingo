@@ -15,7 +15,7 @@ async function boostrap() {
         return;
     }
 
-    if (!DuolingoService.loadProfileData()) {
+    if (!await DuolingoService.loadProfileData()) {
         if (--bootstrapTries === 0) {
             LoggerService.error("Failed to initialize");
             return;
