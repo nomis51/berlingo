@@ -51,8 +51,8 @@ jobs:
 
       - name: Update version variables
         run: |
-          sed -i "s|\${version}|$VERSION|g" public/index.html
-          sed -i "s|\${version}|$VERSION|g" public/main.js
+          sed -i "s|\${version}|$VERSION|g" ../dist/popup/index.html
+          sed -i "s|\${version}|$VERSION|g" ../dist/main.js
         env:
           VERSION: ${{ env.VERSION }}
 
