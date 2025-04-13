@@ -4,10 +4,24 @@
 }
 
 .md-header {
-    background-color: #006aa7 !important;
+    background-color: #93d333 !important;
 }
 
 .md-nav__link--active,
 .md-content a {
-    color: #006aa7 !important;
+    color: #93d333 !important;
+}
+
+.md-nav__link:hover {
+    color: #93d333 !important;
+}
+
+@media (max-width: 1219px) {
+    .md-nav--primary .md-nav__title {
+        background-color: #93d333 !important;
+    }
+}
+
+.md-nav__source {
+    background-color: #93d333 !important;
 }

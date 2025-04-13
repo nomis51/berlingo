@@ -4,8 +4,8 @@ theme:
   logo: images/logo.png
   favicon: images/logo.ico
   palette:
-    primary: '#006aa7'
-    accent: '#e67e22'
+    primary: '#93d333'
+    accent: '#ffc700'
   icon:
     repo: fontawesome/brands/github
 
@@ -31,6 +31,8 @@ extra_css:
 
 nav:
   - Home: index.md
+  - Requirements: requirements.md
   - Installation: installation.md
+  - Get started: get-started.md
   - FAQ: faq.md
   - Changelog: changelog.md
