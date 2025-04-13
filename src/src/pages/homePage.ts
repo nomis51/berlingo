@@ -30,6 +30,9 @@ export class HomePage extends Page {
         root.appendChild(testAlert.render());
     }
 
+    /**
+     * Protected functions
+     */
     protected isReady(): boolean {
         return !!document.getElementById("root");
     }

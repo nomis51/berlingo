@@ -1,4 +1,5 @@
 ﻿import {Component} from "../../components/abstractions/component";
+import {LoggerService} from "../../content/services/loggerService";
 
 export abstract class Page {
     /**
@@ -21,6 +22,7 @@ export abstract class Page {
 
 
     public dispose() {
+        LoggerService.debug("Disposing page");
         this._components.forEach(component => component.dispose());
     }
 

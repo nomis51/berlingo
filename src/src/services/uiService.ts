@@ -2,6 +2,7 @@
 import {HomePage} from "../pages/homePage";
 import {Page} from "../pages/abstractions/page";
 import {LessonPage} from "../pages/lessonPage";
+import {SettingsPage} from "../pages/settingsPage";
 
 class UiServiceImpl {
     /**
@@ -29,6 +30,8 @@ class UiServiceImpl {
             this._currentPage = new HomePage();
         } else if (location.pathname.startsWith("/lesson")) {
             this._currentPage = new LessonPage();
+        } else if (location.pathname.startsWith("/settings")) {
+            this._currentPage = new SettingsPage();
         }
 
         await this._currentPage?.render();
@@ -46,7 +49,6 @@ class UiServiceImpl {
         history.replaceState = async (...args: any) => {
             LoggerService.debug("replaceState", args);
             replaceState.apply(history, args);
-            await this.setPage();
         };
     }
 
