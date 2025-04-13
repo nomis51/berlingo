@@ -1,8 +1,8 @@
-# <img src="./images/logo.png" style="height: 80px; width: auto;"> Welcome to Berlingo documentation
+# <img src="./docs/docs/images/logo.png" style="height: 80px; width: auto;"> Welcome to Berlingo documentation
 
 Berlingo is a chrome extension that allows you to solve Duolingo lessons.
 
-![solving-duolingo](./images/solving-duolingo.png)
+![solving-duolingo](./docs/docs/images/solving-duolingo.png)
 
 ## Requirements
 
@@ -15,7 +15,7 @@ store.
 But, you can still use it by installing it manually, here are the steps :
 
 - Download the latest version of the `berlingo.1.2.3.zip` on
-  the [release page](https://github.com/berlingo/berlingo/releases/latest) (where ``1.2.3` is the version number)
+  the [release page](https://github.com/nomis51/berlingo/releases/latest) (where ``1.2.3` is the version number)
 - Go to your browser
 - Go to `Settings`
 - Go to `Extensions`
