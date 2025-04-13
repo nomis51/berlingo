@@ -1,7 +1,16 @@
 ﻿import {Page} from "./abstractions/page";
 import {LoggerService} from "../content/services/loggerService";
+import {TextFieldComponent} from "../components/textFieldComponent";
+import {StorageService} from "../services/storageService";
+import {StorageKey} from "../content/types/storage/storageKey";
+import {Settings} from "../content/types/settings";
 
 export class SettingsPage extends Page {
+    /**
+     * Members
+     */
+    private _solveDelayTextField!: TextFieldComponent;
+
     /**
      * Public functions
      */
@@ -29,35 +38,31 @@ export class SettingsPage extends Page {
             return;
         }
 
-        const section = document.createElement("section");
-        const divHeader = document.createElement("div");
-        const divDivHeader = document.createElement("div");
-        const title = document.createElement("h2");
-        title.textContent = "Berlingo settings";
-        divDivHeader.appendChild(title);
-        const hr = document.createElement("hr");
-        divHeader.appendChild(divDivHeader);
-        divHeader.appendChild(hr);
-        section.appendChild(divHeader);
+        this._solveDelayTextField = this.addComponent(new TextFieldComponent(
+            "e.g. 500",
+            "Solve delay",
+            "",
+            "number",
+        ));
+        container.appendChild(this._solveDelayTextField.render());
 
-        const ul = document.createElement("ul");
-        const li = document.createElement("li");
-        const liDiv = document.createElement("div");
-        const liTitle = document.createElement("span");
-        liTitle.textContent = "Solve delay";
-        liDiv.appendChild(liTitle)
+        this._solveDelayTextField.onChange(async (value) => {
+            const iValue = parseInt(value);
+            if (isNaN(iValue)) return;
 
-        const input = document.createElement("input");
-        input.type = "number";
-        input.value = "500";
-        input.placeholder = "Solve delay in ms";
-        liDiv.appendChild(input);
+            let settings = await StorageService.get<Settings>(StorageKey.settings);
+            if (!settings) {
+                settings = {
+                    solveDelay: 200
+                };
+            }
 
-        li.appendChild(liDiv);
-        ul.appendChild(li);
+            settings.solveDelay = iValue;
+            await StorageService.set(StorageKey.settings, settings);
+        });
 
-        section.appendChild(ul);
-        container.appendChild(section);
+        const settings = await StorageService.get<Settings>(StorageKey.settings);
+        this._solveDelayTextField.setValue(settings?.solveDelay.toString() ?? "200");
     }
 
     /**

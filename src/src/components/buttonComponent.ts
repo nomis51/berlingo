@@ -1,5 +1,4 @@
 ﻿import {Component} from "./abstractions/component";
-import {LoggerService} from "../content/services/loggerService";
 
 export class ButtonComponent extends Component {
     /**
