@@ -19,6 +19,7 @@ jobs:
     
     outputs:
       version: ${{ steps.get_version.outputs.version }}
+      version_nodots: ${{ steps.get_version.outputs.version_nodots }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +36,7 @@ jobs:
           VERSION=${LATEST_TAG#v}
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "version_nodots=${VERSION//./}" >> $GITHUB_OUTPUT
 
       - name: Update package.json and manifest.json
         run: |
@@ -87,4 +89,4 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           body: |
-            Release notes for ${{ github.ref_name }}
+            Changelog can be found [here](https://nomis51.github.io/berlingo/changelog/#v${{ needs.build.outputs.version_nodots }})
