@@ -3,68 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Berlingo</title>
-    <script src="./popup.js"></script>
+    <script src="./index.js"></script>
     <link rel="stylesheet"
-          href="./popup.css"
+          href="./index.css"
           type="text/css">
-    <style>
-        * {
-            font-family: "Corbel", serif;
-            color: #333333;
-        }
-
-        html, body {
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
-<body class="w-72 h-72 rounded">
+<body class="w-72">
 <div class="flex flex-col gap-2">
-    <div class="flex flex-row gap-2 align-middle items-center p-1 bg-green-600">
+    <div class="flex flex-row gap-2 align-middle items-center p-1"
+         style="background-color: var(--duolingo-green)">
         <img src="../images/logo.png"
              alt="logo"
-             class="w-20 h-20">
-        <h1 class="font-bold text-5xl !text-white">Berlingo</h1>
-    </div>
-
-    <div class="flex flex-col gap-2 px-2">
-        <div class="flex flex-row justify-between">
-            <div>
-                <p id="label-language"
-                   class="hidden bg-blue-400 !text-white font-bold px-2 py-1 rounded uppercase"></p>
-            </div>
-
-            <div class="relative">
-                <img src="../images/cog.svg"
-                     alt="settings"
-                     class="w-6 h-6 cursor-pointer"
-                     id="settings-button">
-
-                <div id="settings-container"
-                     class="hidden z-10 absolute top-8 right-0 w-64 shadow border-1 accent-neutral-100 rounded bg-white">
-                    <div class="p-2 flex flex-col gap-2">
-                        <button id="download-logs"
-                                class="hover:bg-neutral-200 bg-transparent border-0 rounded p-1">Download the log file
-                        </button>
-                    </div>
+             class="w-18 h-18">
+        <div class="flex flex-col gap-0">
+            <h1 class="font-bold text-5xl !text-white">Berlingo</h1>
+            <div class="flex flex-row justify-between">
+                <div>
+                    <p id="label-language"
+                       class="hidden !text-white font-bold px-2 py-1 uppercase"
+                       style="background-color: var(--duolingo-blue)"></p>
                 </div>
+                <span class="!text-white text-right">v0.1.0</span>
             </div>
         </div>
-
-        <hr class="border-neutral-400">
-
-        <div>
-            <label for="text-input-solve-delay"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Solve delay (ms)</label>
-            <input type="number"
-                   id="text-input-solve-delay"
-                   min="0"
-                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                   placeholder="e.g. 500"
-                   required/>
-        </div>
     </div>
+
+    <div class="flex flex-col gap-2 px-2 pb-3">
+        <button id="button-report-bug"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Report a bug</span>
+            <img src="../images/bug.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-documentation"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Documentation</span>
+            <img src="../images/documentation.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-open-github"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Open the project page</span>
+            <img src="../images/github.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-download-logs"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Download the log file</span>
+            <img src="../images/download.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+    </div>
+</div>
 </body>
 </html>

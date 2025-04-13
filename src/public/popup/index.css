@@ -1,1 +1,65 @@
 ﻿@import "tailwindcss";
+
+@font-face {
+    font-family: 'din-round';
+    src: local('DIN Round Pro Regular'), local('DIN-Round-Pro-Regular'),
+    url('../fonts/DINRoundPro.woff2') format('woff2'),
+    url('../fonts/DINRoundPro.woff') format('woff'),
+    url('../fonts/DINRoundPro.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+    --duolingo-green: #93d333;
+    --duolingo-green-dark: rgb(121, 185, 51);
+    --duolingo-blue: #1cb0f6;
+    --duolingo-red: #ee5555;
+    --duolingo-yellow: #ffc700;
+
+    --duolingo-button-text-dark: #131f24;
+    --duolingo-button-text-light: #fff;
+
+    --duolingo-font-family: din-round, sans-serif;
+}
+
+html, body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+* {
+    font-family: din-round, sans-serif !important;
+    color: #333333;
+}
+
+button {
+    font-weight: 700;
+    font-family: var(--duolingo-font-family);
+    text-wrap: nowrap;
+    text-transform: uppercase;
+    align-items: center;
+    color: var(--duolingo-button-text-dark);
+    font-size: 13px;
+    background: var(--duolingo-green);
+    border: none !important;
+    padding: 10px 11px;
+    box-shadow: 0 4px 0 var(--duolingo-green-dark);
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+button span {
+    color: var(--duolingo-button-text-dark);
+}
+
+button:active {
+    box-shadow: none;
+    transform: translate(0, 4px);
+}
+
+button:hover {
+    filter: brightness(1.1);
+}

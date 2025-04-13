@@ -17,7 +17,7 @@ module.exports = {
         path: path.join(__dirname, "../dist"),
         filename: (pathData) => {
             const name = pathData.chunk.name;
-            if (name === "popup") return "popup/[name].js"
+            if (name === "popup") return "popup/index.js"
             if (name === "init") return "content/[name].js"
             return "[name].js";
         }
