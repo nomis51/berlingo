@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Berlingo</title>
+    <script src="./index.js"></script>
+    <link rel="stylesheet"
+          href="./index.css"
+          type="text/css">
+</head>
+<body class="w-72">
+<div class="flex flex-col gap-2">
+    <div class="flex flex-row gap-2 align-middle items-center p-1"
+         style="background-color: var(--duolingo-green)">
+        <img src="../images/logo.png"
+             alt="logo"
+             class="w-18 h-18">
+        <div class="flex flex-col gap-0">
+            <h1 class="font-bold text-5xl !text-white">Berlingo</h1>
+            <div class="flex flex-row justify-between items-center">
+                <div>
+                    <p id="label-language"
+                       class="hidden !text-white font-bold px-2 py-0.5 uppercase rounded"
+                       style="background-color: var(--duolingo-blue)"></p>
+                </div>
+                <span class="!text-white text-right">v${version}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2 px-2 pb-3">
+        <button id="button-report-bug"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Report a bug</span>
+            <img src="../images/bug.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-documentation"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Documentation</span>
+            <img src="../images/documentation.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-open-github"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Open the project page</span>
+            <img src="../images/github.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+        <button id="button-download-logs"
+                class="flex flex-row gap-1 align-middle text-center justify-center">
+            <span>Download the log file</span>
+            <img src="../images/download.svg"
+                 alt="bug"
+                 class="h-5 w-5">
+        </button>
+    </div>
+</div>
+</body>
+</html>

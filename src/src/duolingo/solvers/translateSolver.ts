@@ -1,6 +1,7 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {getStorage} from "../../helpers/storage";
-import {StorageKey} from "../../types";
+import {StorageService} from "../../services/storageService";
+import {Settings} from "../../content/types/settings";
+import {StorageKey} from "../../content/types/storage/storageKey";
 
 export class TranslateSolver extends Solver {
     public getAnswer(): string {
@@ -26,12 +27,12 @@ export class TranslateSolver extends Solver {
                     tapTokens[content].push(e);
                 });
 
-            const settings = await getStorage<any>(StorageKey.Settings);
+            const settings = await StorageService.get<Settings>(StorageKey.settings);
             await this.executeListWithDelay(e => {
                 if (!tapTokens[e] || tapTokens[e].length === 0) return;
 
                 tapTokens[e].shift().click();
-            }, this.correctTokens, settings.solveDelay ?? 200);
+            }, this.correctTokens, settings?.solveDelay ?? 200);
         }
     }
 

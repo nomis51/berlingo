@@ -61,7 +61,7 @@ class Extension {
             log("No answer found");
             return;
         }
-       
+
         log("Answer:", text);
         this._answerText!.textContent = text;
         this._answerText!.style.display = "block";
@@ -102,6 +102,7 @@ class Extension {
         debug("Finding course data");
 
         const props = reactUtils.findReactFiberWithProp("username");
+        log("props:", props);
         if (!props) return false;
 
         const currentCourse = props.courses.find((e: any) => e.isCurrent);

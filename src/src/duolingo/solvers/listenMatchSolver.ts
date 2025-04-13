@@ -1,6 +1,7 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {StorageKey} from "../../types";
-import {getStorage} from "../../helpers/storage";
+import {StorageService} from "../../services/storageService";
+import {Settings} from "../../content/types/settings";
+import {StorageKey} from "../../content/types/storage/storageKey";
 
 export class ListenMatchSolver extends Solver {
     public getAnswer(): string {
@@ -19,10 +20,10 @@ export class ListenMatchSolver extends Solver {
             groupedNodes[dataTestKey].push(e);
         });
 
-        const settings = await getStorage<any>(StorageKey.Settings);
+        const settings = await StorageService.get<Settings>(StorageKey.settings);
         await this.executeListWithDelay(e => {
             e?.[0]?.click();
             e?.[1]?.click();
-        }, Object.values(groupedNodes), settings.solveDelay ?? 200);
+        }, Object.values(groupedNodes), settings?.solveDelay ?? 200);
     }
 }

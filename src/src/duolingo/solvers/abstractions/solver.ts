@@ -1,6 +1,7 @@
-﻿import {reactUtils} from "../../../helpers/reactUtils";
-import {getStorage} from "../../../helpers/storage";
-import {StorageKey} from "../../../types";
+﻿import {ReactService} from "../../../services/reactService";
+import {StorageService} from "../../../services/storageService";
+import {StorageKey} from "../../../content/types/storage/storageKey";
+import {Settings} from "../../../content/types/settings";
 
 export abstract class Solver {
     /**
@@ -123,7 +124,7 @@ export abstract class Solver {
     }
 
     protected updateInternals() {
-        const element = reactUtils.getReactFiber(document.querySelector('[data-test="challenge-header"]'));
+        const element = ReactService.getReactFiber(document.querySelector('[data-test="challenge-header"]'));
         if (!element) return;
 
         this._internals = element.memoizedProps?.children?.props;
@@ -162,14 +163,14 @@ export abstract class Solver {
 
         const choices = elementToSelectFrom.querySelectorAll(querySelector);
 
-        const settings = await getStorage<any>(StorageKey.Settings);
+        const settings = await StorageService.get<Settings>(StorageKey.settings);
         await this.executeListWithDelay(e => {
             if (e >= choices.length) {
                 e = choices.length - 1;
             }
 
             choices[e]?.click();
-        }, indices, settings.solveDelay ?? 200);
+        }, indices, settings?.solveDelay ?? 200);
     }
 
 
@@ -177,11 +178,11 @@ export abstract class Solver {
         let translateInput = document.querySelector("[data-test='challenge-translate-input']");
         if (!translateInput) return;
 
-        reactUtils.getReactFiber(translateInput)?.pendingProps?.onChange({target: {value: translation}})
+        ReactService.getReactFiber(translateInput)?.pendingProps?.onChange({target: {value: translation}})
     }
 
     private async setClickNextInterval() {
-        const settings = await getStorage<any>(StorageKey.Settings);
+        const settings = await StorageService.get<Settings>(StorageKey.settings);
 
         this._clickNextInterval = setInterval(async () => {
             const playerNextButton = document.querySelector("[data-test='player-next']");
@@ -203,6 +204,6 @@ export abstract class Solver {
             } else {
                 this._activeClickNext = false;
             }
-        }, settings.solveDelay ?? 200);
+        }, settings?.solveDelay ?? 200);
     }
 }

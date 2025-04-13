@@ -36,10 +36,12 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Update package.json version
+      - name: Update package.json, manifest.json and ${version} version
         run: |
           jq --arg version "$VERSION" '.version = $version' package.json > tmp.$$.json && mv tmp.$$.json package.json
           jq --arg version "$VERSION" '.version = $version' public/manifest.json > tmp.json && mv tmp.json public/manifest.json
+          sed -i "s|\${version}|$VERSION|g" public/index.html
+          sed -i "s|\${version}|$VERSION|g" public/main.js
         env:
           VERSION: ${{ env.VERSION }}
 
