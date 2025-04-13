@@ -1,6 +1,7 @@
 ﻿import {Page} from "./abstractions/page";
 import {AlertComponent} from "../components/alertComponent";
 import {LoggerService} from "../content/services/loggerService";
+import {DuolingoService} from "../services/duolingoService";
 
 export class HomePage extends Page {
     /**
@@ -10,6 +11,10 @@ export class HomePage extends Page {
         await super.render();
 
         LoggerService.debug("Rendering home page");
+
+        if (DuolingoService.loadProfileData()) {
+            LoggerService.debug("Profile data refreshed");
+        }
 
         const testAlert = this.addComponent(new AlertComponent("Berlingo v0.1.0", "success"));
         testAlert.customStyle = `<style>

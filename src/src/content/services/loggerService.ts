@@ -1,4 +1,8 @@
-﻿const LOG_PREFIX = "%c BERLINGO ";
+﻿import {StorageService} from "./storageService";
+import {StorageService as ContentStorageService} from "../../content/services/storageService";
+import {StorageKey} from "../types/storage/storageKey";
+
+const LOG_PREFIX = "%c BERLINGO ";
 const LOG_LEVEL = {
     DEBUG: 1,
     INFO: 2,
@@ -40,6 +44,7 @@ class LoggerServiceImpl {
     private log(level: number, ...args: any[]) {
         const styles = this.getLevelStyles(level);
         console.log(LOG_PREFIX, styles, ...args);
+        this.saveLog([level, ...args]).then();
     }
 
     private getLevelStyles(level: number): string {
@@ -55,6 +60,28 @@ class LoggerServiceImpl {
             default:
                 return "";
         }
+    }
+
+    private async saveLog(args: any[]) {
+        const storageService = this.hasAccessToChromeApi() ? StorageService : ContentStorageService;
+
+        await ContentStorageService.acquireLock(StorageKey.logs);
+
+        try {
+            let logs = await storageService.get<string[][]>(StorageKey.logs);
+            if (!logs) {
+                logs = [];
+            }
+
+            logs.push(args);
+            await storageService.set(StorageKey.logs, logs);
+        } finally {
+            ContentStorageService.releaseLock(StorageKey.logs);
+        }
+    }
+
+    private hasAccessToChromeApi(): boolean {
+        return !!chrome && !!chrome.storage && !!chrome.storage.local;
     }
 }
 
