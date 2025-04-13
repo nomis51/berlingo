@@ -1,55 +1,18 @@
 ﻿:root {
-    --duolingo-green: #58cc02;
-    --duolingo-green-darker: #58a700;
+    --duolingo-green: #93d333;
+    --duolingo-green-dark: rgb(121, 185, 51);
+    --duolingo-blue: #1cb0f6;
+    --duolingo-red: #ee5555;
+    --duolingo-yellow: #ffc700;
+
+    --duolingo-button-text-dark: #131f24;
+    --duolingo-button-text-light: #fff;
+
+    --duolingo-border-dark: #37464f;
+
+    --duolingo-font-family: din-round, sans-serif;
 }
 
-#berlingo-container {
-    position: fixed;
-    bottom: 2.8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999999;
-    border-radius: 8px;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: end;
-    gap: 2px;
-}
-
-#berlingo-container .buttons-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: end;
-    gap: 4px;
-}
-
-#berlingo-container .buttons-container button {
-    align-items: center;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 18px;
-    background: var(--duolingo-green);
-    border: none !important;
-    padding: 15px 16px;
-    box-shadow: 0 4px 0 var(--duolingo-green-darker);
-    border-radius: 12px;
-    cursor: pointer;
-    height: 46px;
-    max-height: 46px;
-}
-
-#berlingo-container .buttons-container button:active {
-    box-shadow: none;
-    transform: translate(0, 4px);
-}
-
-#berlingo-container #answer-text {
-    width: 100%;
-    text-align: center;
-    border-radius: 12px;
-    background: cornflowerblue;
-    padding: 16px;
-    display: none;
+.berlingo * {
+    font-family: din-round, sans-serif
 }

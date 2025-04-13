@@ -1,5 +1,5 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {reactUtils} from "../../helpers/reactUtils";
+import {ReactService} from "../../services/reactService";
 
 export class TypeCompleteTableSolver extends Solver {
     public getAnswer(): string {
@@ -10,7 +10,7 @@ export class TypeCompleteTableSolver extends Solver {
         return new Promise<void>((resolve) => {
             const blankInputs = document.querySelectorAll("input[type=text]");
             blankInputs.forEach(e => {
-                const fiber = reactUtils.getReactFiber(e);
+                const fiber = ReactService.getReactFiber(e);
                 if (!fiber) return;
 
                 const answerToken = fiber.return?.return?.return?.return?.pendingProps;

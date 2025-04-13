@@ -1,35 +1,29 @@
-﻿import {ChromeMessage, WindowMessage, WindowMessageType} from "../types";
-import {getStorage, setStorage} from "../helpers/storage";
-import {log} from "../helpers/logger";
+import {StorageService} from "./services/storageService";
+import {IpcService} from "./services/ipcService";
+import {SetStorageRequest} from "./types/storage/setStorageRequest";
+import {GetStorageRequest} from "./types/storage/getStorageRequest";
+import {IpcMessageType} from "./types/ipc/ipcMessageType";
+import {LoggerService} from "./services/loggerService";
+import {IpcMessageProtocol} from "./types/ipc/ipcMessageProtocol";
 
-// Extension communications
-window.addEventListener("message", async e => {
-    if (e.data.type === WindowMessageType.SetStorage.request) {
-        await setStorage(e.data.data.key, e.data.data.value);
-        window.postMessage({
-            id: e.data.id,
-            type: WindowMessageType.SetStorage.response,
-            data: true
-        } as WindowMessage)
-    } else if (e.data.type === WindowMessageType.GetStorage.request) {
-        const value = await getStorage(e.data.data);
-        window.postMessage({
-            id: e.data.id,
-            type: WindowMessageType.GetStorage.response,
-            data: value
-        } as WindowMessage)
-    }
-});
-
-// Popup communications
-chrome.runtime.onMessage.addListener((message: ChromeMessage, _, __) => {
-    sendCustomEvent(message.action, message.data);
-});
-
+LoggerService.initialize();
 injectStylesheet();
 injectScript();
 
+IpcService.addListener<SetStorageRequest>(IpcMessageType.setStorage, async e => {
+    await StorageService.set(e.data!.key, e.data!.value);
+    await IpcService.responseMessage(e.id, IpcMessageType.setStorage, true);
+}, IpcMessageProtocol.Window);
+IpcService.addListener<GetStorageRequest>(IpcMessageType.getStorage, async e => {
+    const value = await StorageService.get(e.data!.key);
+    await IpcService.responseMessage(e.id, IpcMessageType.getStorage, value);
+}, IpcMessageProtocol.Window);
+IpcService.addListener<string>(IpcMessageType.languageUpdated, async e => {
+    await IpcService.sendMessage(IpcMessageType.languageUpdated, e.data, IpcMessageProtocol.Chrome);
+}, IpcMessageProtocol.Window);
+
 function injectStylesheet() {
+    LoggerService.debug("Injecting stylesheet");
     const stylesheet = document.createElement("link");
     stylesheet.setAttribute("rel", "stylesheet")
     stylesheet.setAttribute("type", "text/css")
@@ -39,16 +33,11 @@ function injectStylesheet() {
 }
 
 function injectScript() {
+    LoggerService.debug("Injecting script");
     const body = document.body;
     const script = document.createElement("script");
     script.setAttribute("type", "module");
     script.setAttribute("berlingo", "1")
-    script.setAttribute("src", `chrome-extension://${chrome.runtime.id}/extension.js`);
+    script.setAttribute("src", `chrome-extension://${chrome.runtime.id}/main.js`);
     body.appendChild(script);
-}
-
-function sendCustomEvent(actionType: string, data: any | undefined) {
-    const event = document.createEvent("CustomEvent");
-    event.initCustomEvent(actionType, true, true, {data});
-    document.dispatchEvent(event);
 }

@@ -8,16 +8,17 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     entry: {
         background: path.resolve(__dirname, "src", "background.ts"),
-        popup: path.resolve(__dirname, "src", "ui", "popup.ts"),
+        popup: path.resolve(__dirname, "src", "popup", "index.ts"),
         init: path.resolve(__dirname, "src", "content", "init.ts"),
-        extension: path.resolve(__dirname, "src", "content", "extension.ts"),
+        main: path.resolve(__dirname, "src", "main.ts"),
     },
     output: {
         clean: true,
         path: path.join(__dirname, "../dist"),
         filename: (pathData) => {
             const name = pathData.chunk.name;
-            if (name === "popup") return "ui/[name].js"
+            if (name === "popup") return "popup/index.js"
+            if (name === "init") return "content/[name].js"
             return "[name].js";
         }
     },

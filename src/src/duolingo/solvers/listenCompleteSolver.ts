@@ -1,5 +1,5 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {reactUtils} from "../../helpers/reactUtils";
+import {ReactService} from "../../services/reactService";
 
 export class ListenCompleteSolver extends Solver {
     public getAnswer(): string {
@@ -14,7 +14,7 @@ export class ListenCompleteSolver extends Solver {
 
                 // @ts-ignore
                 const input = translateInputs.shift() as HTMLInputElement;
-                reactUtils.getReactFiber(input)
+                ReactService.getReactFiber(input)
                     ?.return
                     ?.stateNode
                     ?.props

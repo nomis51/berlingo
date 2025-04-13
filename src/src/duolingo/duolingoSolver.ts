@@ -24,9 +24,9 @@
     TypeClozeTableSolver,
     TypeCompleteTableSolver
 } from "./solvers";
-import {reactUtils} from "../helpers/reactUtils";
 import {Solver} from "./solvers/abstractions/solver";
-import {debug, error, log} from "../helpers/logger";
+import {LoggerService} from "../content/services/loggerService";
+import {ReactService} from "../services/reactService";
 
 export class DuolingoSolver {
     private readonly _solvers: Map<string, any> = new Map([
@@ -70,8 +70,8 @@ export class DuolingoSolver {
         await solver.solve();
         if (!moveNext) return;
 
-        debug("Moving to the next challenge")
-        solver.clickNext();
+        LoggerService.debug("Moving to the next challenge")
+        await solver.clickNext();
     }
 
     public getAnswer(): string {
@@ -84,13 +84,13 @@ export class DuolingoSolver {
     private getSolver(): Solver | undefined {
         const challengeType = this.getChallengeType();
         if (!challengeType) {
-            error("Challenge type not found");
+            LoggerService.error("Challenge type not found");
             return;
         }
 
         const solverType = this._solvers.get(challengeType);
         if (!solverType) {
-            error("Solver type not found");
+            LoggerService.error("Solver type not found");
             return;
         }
 
@@ -98,7 +98,7 @@ export class DuolingoSolver {
     }
 
     private getChallengeType(): string | undefined {
-        const element = reactUtils.getReactFiber(document.querySelector('[data-test="challenge-header"]'));
+        const element = ReactService.getReactFiber(document.querySelector('[data-test="challenge-header"]'));
         if (!element) return;
 
         return element.memoizedProps?.children?.props?.challenge?.type;

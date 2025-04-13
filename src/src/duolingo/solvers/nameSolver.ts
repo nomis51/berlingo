@@ -1,5 +1,5 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {reactUtils} from "../../helpers/reactUtils";
+import {ReactService} from "../../services/reactService";
 
 export class NameSolver extends Solver {
     public getAnswer(): string {
@@ -30,7 +30,7 @@ export class NameSolver extends Solver {
             const translateInput = document.querySelector("[data-test='challenge-text-input']");
             if (!translateInput) return resolve();
 
-            reactUtils.getReactFiber(translateInput)?.return?.stateNode?.onChange({target: {value: answer}});
+            ReactService.getReactFiber(translateInput)?.return?.stateNode?.onChange({target: {value: answer}});
         });
     }
 }

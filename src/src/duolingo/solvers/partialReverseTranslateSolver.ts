@@ -1,5 +1,5 @@
 ﻿import {Solver} from "./abstractions/solver";
-import {reactUtils} from "../../helpers/reactUtils";
+import {ReactService} from "../../services/reactService";
 
 export class PartialReverseTranslateSolver extends Solver {
     public getAnswer(): string {
@@ -16,7 +16,7 @@ export class PartialReverseTranslateSolver extends Solver {
                 .map(e => e.text)
                 .join('');
             const translateInput = document.querySelector("[contenteditable='true']") as HTMLInputElement;
-            reactUtils.getReactFiber(translateInput)
+            ReactService.getReactFiber(translateInput)
                 ?.pendingProps
                 ?.onInput({currentTarget: {innerText: textToFill}})
 
