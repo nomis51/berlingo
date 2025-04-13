@@ -53,6 +53,14 @@ export class LessonPage extends Page {
             childList: true,
             subtree: true
         });
+
+        document.addEventListener("keyup", async e => {
+            if (e.key === "Enter" && e.ctrlKey) {
+                await this.solve()
+            } else if (e.key === "Enter" && e.altKey) {
+                this.showAnswer();
+            }
+        });
     }
 
     /**
