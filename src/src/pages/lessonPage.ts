@@ -29,15 +29,16 @@ export class LessonPage extends Page {
         container.style.alignItems = "center";
         container.style.gap = "4px";
 
-        this._showAnswerButton = this.addComponent(new ButtonComponent("Show answer"));
+        this._showAnswerButton = this.addComponent(new ButtonComponent("Show answer", "button-show-answer"));
         container.insertBefore(this._showAnswerButton.render(), playerNextButton);
         this._showAnswerButton.addEventListener("click", this.showAnswer.bind(this))
 
-        this._solveButton = this.addComponent(new ButtonComponent("Solve"));
+        this._solveButton = this.addComponent(new ButtonComponent("Solve", "button-solve"));
         container.insertBefore(this._solveButton.render(), playerNextButton);
         this._solveButton.addEventListener("click", this.solve.bind(this));
 
-        const observer = new MutationObserver(() => {
+        const observer = new MutationObserver(async () => {
+            console.log("update")
             const blame = document.querySelector("[data-test~='blame']");
             if (!blame) {
                 this._solveButton.setDisabled(false);
@@ -47,9 +48,17 @@ export class LessonPage extends Page {
                 this._showAnswerButton.setDisabled(true);
                 this.hideAnswer();
             }
+
+            if (!document.getElementById("button-solve") ||
+                !document.getElementById("button-show-answer")) {
+                console.log("re-render");
+                observer.disconnect();
+                await this.render();
+                return;
+            }
         });
 
-        observer.observe(document.getElementById("session/PlayerFooter")!, {
+        observer.observe(document, {
             childList: true,
             subtree: true
         });
