@@ -11,6 +11,7 @@ export class LessonPage extends Page {
     private _solveButton!: ButtonComponent;
     private _showAnswerButton!: ButtonComponent;
     private _answerAlert: AlertComponent | undefined;
+    private _observer: MutationObserver | undefined;
 
     /**
      * Public functions
@@ -37,7 +38,7 @@ export class LessonPage extends Page {
         container.insertBefore(this._solveButton.render(), playerNextButton);
         this._solveButton.addEventListener("click", this.solve.bind(this));
 
-        const observer = new MutationObserver(async () => {
+        this._observer = new MutationObserver(async () => {
             const blame = document.querySelector("[data-test~='blame']");
             if (!blame) {
                 this._solveButton.setDisabled(false);
@@ -50,14 +51,13 @@ export class LessonPage extends Page {
 
             if (!document.getElementById("button-solve") ||
                 !document.getElementById("button-show-answer")) {
-                observer.disconnect();
                 this.dispose();
                 await this.render();
                 return;
             }
         });
 
-        observer.observe(document, {
+        this._observer.observe(document, {
             childList: true,
             subtree: true
         });
@@ -69,6 +69,11 @@ export class LessonPage extends Page {
                 this.showAnswer();
             }
         });
+    }
+
+    public dispose() {
+        this._observer?.disconnect();
+        super.dispose();
     }
 
     /**
