@@ -38,7 +38,6 @@ export class LessonPage extends Page {
         this._solveButton.addEventListener("click", this.solve.bind(this));
 
         const observer = new MutationObserver(async () => {
-            console.log("update")
             const blame = document.querySelector("[data-test~='blame']");
             if (!blame) {
                 this._solveButton.setDisabled(false);
@@ -51,7 +50,6 @@ export class LessonPage extends Page {
 
             if (!document.getElementById("button-solve") ||
                 !document.getElementById("button-show-answer")) {
-                console.log("re-render");
                 observer.disconnect();
                 this.dispose();
                 await this.render();
