@@ -10,19 +10,17 @@ async function boostrap() {
     LoggerService.debug("Bootstrapping");
 
     if (location.pathname !== "/learn") {
-        LoggerService.debug("Navigating to duolingo.com/learn");
-        location.href = "https://www.duolingo.com/learn";
-        return;
-    }
+        if (!await DuolingoService.loadProfileData()) {
+            if (--bootstrapTries === 0) {
+                LoggerService.error("Failed to acquire profile data");
+                return;
+            }
 
-    if (!await DuolingoService.loadProfileData()) {
-        if (--bootstrapTries === 0) {
-            LoggerService.error("Failed to initialize");
-            return;
+            LoggerService.warn("Failed to acquire profile data, retrying...");
+            return setTimeout(boostrap, 1000);
         }
-
-        LoggerService.warn("Failed to initialize, retrying...");
-        return setTimeout(boostrap, 1000);
+    } else {
+        LoggerService.warn("Language cannot be detected outside of the home page")
     }
 
     await UiService.initialize();

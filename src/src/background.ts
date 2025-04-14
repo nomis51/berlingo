@@ -8,8 +8,7 @@ function reloadDuolingoTabs() {
         windows.forEach((window) => {
             window.tabs!.forEach((tab) => {
                 if (tab.url!.includes("duolingo.com")) {
-                    chrome.tabs.update(tab.id!, {url: "https://www.duolingo.com/learn"})
-                        .then();
+                    chrome.tabs.reload(tab!.id!).then();
                 }
             });
         });
