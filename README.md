@@ -32,10 +32,6 @@ For further details for a specific browser, see the [installation page](https://
 You now ready to start using Berlingo, please see the [get started page](https://nomis51.github.io/berlingo/get-started)
 for further details.
 
-## Todos
-
-- Add hotkeys
-
 ## Inspiration
 
 - https://github.com/smintf/autolingo
