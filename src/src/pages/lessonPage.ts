@@ -53,6 +53,7 @@ export class LessonPage extends Page {
                 !document.getElementById("button-show-answer")) {
                 console.log("re-render");
                 observer.disconnect();
+                this.dispose();
                 await this.render();
                 return;
             }
