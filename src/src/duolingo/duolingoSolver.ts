@@ -88,6 +88,8 @@ export class DuolingoSolver {
             return;
         }
 
+        LoggerService.debug("Challenge type: ", challengeType);
+
         const solverType = this._solvers.get(challengeType);
         if (!solverType) {
             LoggerService.error("Solver type not found");

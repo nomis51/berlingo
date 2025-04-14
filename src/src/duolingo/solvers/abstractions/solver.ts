@@ -19,8 +19,8 @@ export abstract class Solver {
         return this._internals?.challengeToggleState?.canToggleTyping ?? false;
     }
 
-    protected get isToggleToTyping(): boolean {
-        return this._internals?.challengeToggleState?.isToggleToTyping ?? false;
+    protected get isToggledToTyping(): boolean {
+        return this._internals?.challengeToggleState?.isToggledToTyping ?? false;
     }
 
     protected get sourceLanguage(): string | undefined {
@@ -97,9 +97,9 @@ export abstract class Solver {
     constructor() {
         this.updateInternals();
 
-        if (this.canToggleTyping && !this.isToggleToTyping) {
-            this.enableKeyboard();
-        }
+        // if (this.canToggleTyping && !this.isToggledToTyping) {
+        //     this.enableKeyboard();
+        // }
     }
 
     /**

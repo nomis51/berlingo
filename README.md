@@ -35,3 +35,7 @@ for further details.
 ## Todos
 
 - Add hotkeys
+
+## Inspiration
+
+- https://github.com/smintf/autolingo

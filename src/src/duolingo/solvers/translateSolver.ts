@@ -9,7 +9,7 @@ export class TranslateSolver extends Solver {
     }
 
     public async solve(): Promise<void> {
-        if (this.isToggleToTyping) {
+        if (this.isToggledToTyping) {
             if (this.correctSolutions.length === 0) return;
 
             this.insertTranslation(this.correctSolutions[0])
@@ -35,6 +35,4 @@ export class TranslateSolver extends Solver {
             }, this.correctTokens, settings?.solveDelay ?? 200);
         }
     }
-
-
 }
