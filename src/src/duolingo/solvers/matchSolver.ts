@@ -13,16 +13,23 @@ export class MatchSolver extends Solver {
 
             for (const pair of this.pairs) {
                 let nbTapTokensTapped = 0;
-                for (const tapTokenNode of tapTokenNodes) {
-                    if (tapTokenNode.textContent === pair.learningToken) {
+                for (let i = 0; i < tapTokenNodes.length; ++i) {
+                    const tapTokenNode = tapTokenNodes[i];
+
+                    if (tapTokenNode.childNodes[0].textContent === pair.learningToken) {
                         // @ts-ignore
                         tapTokenNode?.click();
+                        tapTokenNodes.splice(i, 1);
+                        --i;
                         ++nbTapTokensTapped;
+                        continue;
                     }
 
-                    if (tapTokenNode.textContent === pair.fromToken) {
+                    if (tapTokenNode.childNodes[0].textContent === pair.fromToken) {
                         // @ts-ignore
                         tapTokenNode?.click();
+                        tapTokenNodes.splice(i, 1);
+                        --i;
                         ++nbTapTokensTapped;
                     }
 
