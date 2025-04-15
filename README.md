@@ -29,8 +29,8 @@ But, you can still use it by installing it manually, here are the steps :
 
 For further details for a specific browser, see the [installation page](https://nomis51.github.io/berlingo/installation)
 
-You now ready to start using Berlingo, please see the [get started page](https://nomis51.github.io/berlingo/get-started)
-for further details.
+You're now ready to start using Berlingo, please see
+the [get started page](https://nomis51.github.io/berlingo/get-started) for further details.
 
 ## Inspiration
 

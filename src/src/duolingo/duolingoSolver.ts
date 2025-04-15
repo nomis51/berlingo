@@ -59,7 +59,7 @@ export class DuolingoSolver {
         ["definition", DefinitionSolver],
         ["listenIsolation", ListenIsolationSolver],
         ["completeReverseTranslation", CompleteReverseTranslationSolver],
-        ["partialReverseTranslation", PartialReverseTranslateSolver],
+        ["partialReverseTranslate", PartialReverseTranslateSolver],
         ["listenComplete", ListenCompleteSolver],
     ]);
 

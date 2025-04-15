@@ -7,18 +7,35 @@ export class MatchSolver extends Solver {
 
     public solve(): Promise<void> {
         return new Promise<void>((resolve) => {
-            const tapTokenNodes = document.querySelectorAll("[data-test='challenge-tap-token-text']");
-            const tapTokens: any = {};
+            const tapTokenNodes = Array.from(
+                document.querySelectorAll("[data-test='challenge-tap-token-text']")
+            );
 
-            Array.from(tapTokenNodes)
-                .forEach(e => {
-                    tapTokens[e.childNodes[0].textContent as string] = e;
-                });
+            for (const pair of this.pairs) {
+                let nbTapTokensTapped = 0;
+                for (let i = 0; i < tapTokenNodes.length; ++i) {
+                    const tapTokenNode = tapTokenNodes[i];
 
-            this.pairs.forEach((e: any) => {
-                tapTokens[e.learningToken]?.click();
-                tapTokens[e.fromToken]?.click();
-            });
+                    if (tapTokenNode.childNodes[0].textContent === pair.learningToken) {
+                        // @ts-ignore
+                        tapTokenNode?.click();
+                        tapTokenNodes.splice(i, 1);
+                        --i;
+                        ++nbTapTokensTapped;
+                        continue;
+                    }
+
+                    if (tapTokenNode.childNodes[0].textContent === pair.fromToken) {
+                        // @ts-ignore
+                        tapTokenNode?.click();
+                        tapTokenNodes.splice(i, 1);
+                        --i;
+                        ++nbTapTokensTapped;
+                    }
+
+                    if (nbTapTokensTapped === 2) break;
+                }
+            }
 
             resolve();
         });
