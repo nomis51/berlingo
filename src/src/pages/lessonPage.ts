@@ -40,20 +40,28 @@ export class LessonPage extends Page {
 
         this._observer = new MutationObserver(async () => {
             const blame = document.querySelector("[data-test~='blame']");
-            if (!blame) {
-                this._solveButton.setDisabled(false);
-                this._showAnswerButton.setDisabled(false);
-            } else {
-                this._solveButton.setDisabled(true);
-                this._showAnswerButton.setDisabled(true);
+            if (!!blame) {
+                this._solveButton.setVisible(false);
+                this._showAnswerButton.setVisible(false);
                 this.hideAnswer();
+                return;
+            }
+
+            const challenge = document.querySelector("[data-test~='challenge']");
+            if (!challenge) {
+                this._solveButton.setVisible(false);
+                this._showAnswerButton.setVisible(false);
+                this.hideAnswer();
+                return;
             }
 
             if (!document.getElementById("button-solve") ||
                 !document.getElementById("button-show-answer")) {
                 this.dispose();
                 await this.render();
-                return;
+            } else {
+                this._solveButton.setVisible(true);
+                this._showAnswerButton.setVisible(true);
             }
         });
 
