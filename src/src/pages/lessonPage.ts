@@ -55,6 +55,7 @@ export class LessonPage extends Page {
             }
 
             this.skipSuperAds();
+            this.skipLegendaryScreen();
         });
 
         this._observer.observe(document, {
