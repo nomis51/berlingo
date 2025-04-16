@@ -62,6 +62,13 @@ export class ButtonComponent extends Component {
         this.contentContainer?.querySelector("button")?.removeEventListener(event, callback);
     }
 
+    public setVisible(visible: boolean) {
+        const button = this.contentContainer?.querySelector("button");
+        if (!button) return;
+
+        button.style.display = visible ? "block" : "none";
+    }
+
     public setDisabled(disabled: boolean) {
         const button = this.contentContainer?.querySelector("button");
         if (!button) return;
