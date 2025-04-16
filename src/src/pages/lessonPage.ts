@@ -43,6 +43,7 @@ export class LessonPage extends Page {
             if (!!blame) {
                 this._solveButton.setVisible(false);
                 this._showAnswerButton.setVisible(false);
+                this.hideAnswer();
                 return;
             }
 
@@ -50,9 +51,9 @@ export class LessonPage extends Page {
             if (!challenge) {
                 this._solveButton.setVisible(false);
                 this._showAnswerButton.setVisible(false);
+                this.hideAnswer();
                 return;
             }
-
 
             if (!document.getElementById("button-solve") ||
                 !document.getElementById("button-show-answer")) {
@@ -61,7 +62,6 @@ export class LessonPage extends Page {
             } else {
                 this._solveButton.setVisible(true);
                 this._showAnswerButton.setVisible(true);
-                this.hideAnswer();
             }
         });
 
