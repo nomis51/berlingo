@@ -38,22 +38,12 @@ export class LessonPage extends Page {
         container.insertBefore(this._solveButton.render(), playerNextButton);
         this._solveButton.addEventListener("click", this.solve.bind(this));
 
-        this._observer = new MutationObserver(async () => {
-            const blame = document.querySelector("[data-test~='blame']");
-            if (!!blame) {
-                this._solveButton.setVisible(false);
-                this._showAnswerButton.setVisible(false);
-                this.hideAnswer();
-                return;
-            }
+        this.hideIfSplashTitleVisible();
 
-            const challenge = document.querySelector("[data-test~='challenge']");
-            if (!challenge) {
-                this._solveButton.setVisible(false);
-                this._showAnswerButton.setVisible(false);
-                this.hideAnswer();
-                return;
-            }
+        this._observer = new MutationObserver(async () => {
+            if (this.hideIfBlameVisible()) return;
+            if (this.hideIfChallengeNotVisible()) return;
+            if (this.hideIfSplashTitleVisible()) return;
 
             if (!document.getElementById("button-solve") ||
                 !document.getElementById("button-show-answer")) {
@@ -63,6 +53,9 @@ export class LessonPage extends Page {
                 this._solveButton.setVisible(true);
                 this._showAnswerButton.setVisible(true);
             }
+
+            this.skipSuperAds();
+            this.skipLegendaryScreen();
         });
 
         this._observer.observe(document, {
@@ -94,6 +87,81 @@ export class LessonPage extends Page {
     /**
      * Private functions
      */
+    private skipLegendaryScreen() {
+        const legendaryButton = document.querySelector("[data-test='legendary-start-button']")
+        if (!legendaryButton) return;
+
+        LoggerService.debug("Detecting legendary screen");
+
+        const noThanksButton = document.evaluate(
+            "//button[contains(text(), 'No thanks')]",
+            document,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE,
+            null
+        ).singleNodeValue as HTMLButtonElement;
+        if (!noThanksButton) return;
+
+        LoggerService.debug("Skipping legendary screen");
+        noThanksButton.click();
+    }
+
+    private hideIfChallengeNotVisible(): boolean {
+        const challenge = document.querySelector("[data-test~='challenge']");
+        if (!challenge) {
+            this._solveButton.setVisible(false);
+            this._showAnswerButton.setVisible(false);
+            this.hideAnswer();
+            return true;
+        }
+
+        return false;
+    }
+
+    private hideIfBlameVisible(): boolean {
+        const blame = document.querySelector("[data-test~='blame']");
+        if (!!blame) {
+            this._solveButton.setVisible(false);
+            this._showAnswerButton.setVisible(false);
+            this.hideAnswer();
+            return true;
+        }
+
+        return false;
+    }
+
+    private hideIfSplashTitleVisible(): boolean {
+        const splashTitle = document.querySelector("[data-test='session-splash-title']");
+        if (!!splashTitle) {
+            this._solveButton.setVisible(false);
+            this._showAnswerButton.setVisible(false);
+            this.hideAnswer();
+            return true;
+        }
+
+        return false;
+    }
+
+    private skipSuperAds() {
+        const noThanksButton = document.querySelector("[data-test='plus-no-thanks']") as HTMLButtonElement;
+        if (!!noThanksButton) {
+            LoggerService.debug("Saying 'no thanks' to Super ads");
+            noThanksButton.click();
+            return;
+        }
+
+        const superVideo = document.querySelector("video");
+        if (!!superVideo) {
+            LoggerService.debug("Detected Super ads video");
+            const closeButton = document.querySelector("[data-test='plus-close-x']") as HTMLButtonElement;
+            if (!!closeButton) {
+                LoggerService.debug("Closing Super ads video");
+                closeButton.click();
+                return;
+            }
+        }
+    }
+
     private async solve() {
         await DuolingoService.solveChallenge();
     }

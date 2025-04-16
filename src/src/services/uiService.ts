@@ -28,7 +28,8 @@ class UiServiceImpl {
 
         if (location.pathname === "/learn") {
             this._currentPage = new HomePage();
-        } else if (location.pathname.startsWith("/lesson")) {
+        } else if (location.pathname.startsWith("/lesson") ||
+            location.pathname.startsWith("/practice")) {
             this._currentPage = new LessonPage();
         } else if (location.pathname.startsWith("/settings")) {
             this._currentPage = new SettingsPage();
