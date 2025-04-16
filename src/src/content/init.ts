@@ -14,8 +14,8 @@ IpcService.addListener<SetStorageRequest>(IpcMessageType.setStorage, async e => 
     await StorageService.set(e.data!.key, e.data!.value);
     await IpcService.responseMessage(e.id, IpcMessageType.setStorage, true);
 }, IpcMessageProtocol.Window);
-IpcService.addListener<GetStorageRequest>(IpcMessageType.getStorage, async e => {
-    const value = await StorageService.get(e.data!.key);
+IpcService.addListener<string>(IpcMessageType.getStorage, async e => {
+    const value = await StorageService.get(e.data!);
     await IpcService.responseMessage(e.id, IpcMessageType.getStorage, value);
 }, IpcMessageProtocol.Window);
 IpcService.addListener<string>(IpcMessageType.languageUpdated, async e => {
