@@ -1,6 +1,6 @@
 ﻿‎
 
-#### <img src="./images/chrome.png" style="height: 40px; width: auto;"> Google Chrome
+#### <img src="../images/chrome.png" style="height: 40px; width: auto;"> Google Chrome
 
 - Top right corner of the browser, click on the "3 dots" icon
 - Click on "More tools"
