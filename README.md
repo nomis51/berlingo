@@ -1,4 +1,4 @@
-# <img src="./docs/docs/images/logo.png" style="height: 80px; width: auto;"> Welcome to Berlingo documentation
+# <img src="./docs/docs/images/logo.png" style="height: 80px; width: auto;"> Berlingo
 
 Berlingo is a chrome extension that allows you to solve Duolingo lessons.
 
