@@ -30,7 +30,7 @@ export class NameSolver extends Solver {
             const translateInput = document.querySelector("[data-test='challenge-text-input']");
             if (!translateInput) return resolve();
 
-            reactUtils.getReactFiber(translateInput)?.return?.stateNode?.onChange({target: {value: answer}});
+            this.insertTranslation(answer, "[data-test='challenge-text-input']");
         });
     }
 }
