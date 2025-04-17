@@ -24,7 +24,6 @@ module.exports = {
     optimization: {
         minimize: true,
     },
-    devtool: 'cheap-module-source-map',
     entry: {
         background: path.resolve(__dirname, "src", "background.ts"),
         popup: path.resolve(__dirname, "src", "popup", "index.ts"),
@@ -54,6 +53,9 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify("production")
+        }),
         new CopyPlugin({
             patterns: [
                 {
