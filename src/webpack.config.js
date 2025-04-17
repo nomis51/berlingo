@@ -1,11 +1,29 @@
-﻿const path = require('path');
+﻿/*
+ * This file is part of Berlingo
+ *
+ * Copyright (C) 2025 nomis51
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
-    mode: "development",
+    mode: "production",
     optimization: {
-        minimize: false
+        minimize: true,
     },
-    devtool: 'cheap-module-source-map',
     entry: {
         background: path.resolve(__dirname, "src", "background.ts"),
         popup: path.resolve(__dirname, "src", "popup", "index.ts"),
@@ -35,8 +53,24 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify("production")
+        }),
         new CopyPlugin({
-            patterns: [{from: ".", to: ".", context: "public"}]
+            patterns: [
+                {
+                    from: ".",
+                    to: ".",
+                    context: "public"
+                }, {
+                    from: path.resolve(__dirname, '..', 'LICENSE'),
+                    to: 'LICENSE',
+                    toType: 'file'
+                }, {
+                    from: path.resolve(__dirname, '..', 'README.md'),
+                    to: 'README.md'
+                }
+            ]
         }),
     ],
 };
