@@ -1,6 +1,6 @@
 ﻿‎
 
-#### <img src="../../images/edge.png" style="height: 40px; width: auto;"> Microsoft Edge
+#### <img src="./images/edge.png" style="height: 40px; width: auto;"> Microsoft Edge
 
 - Top right corner of the browser, click on the "3 dots" icon
 - Click on "Extensions"
