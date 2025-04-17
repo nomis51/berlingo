@@ -173,8 +173,8 @@ export abstract class Solver {
     }
 
 
-    protected insertTranslation(translation: string) {
-        let translateInput = document.querySelector("[data-test='challenge-translate-input']");
+    protected insertTranslation(translation: string, selector: string = "[data-test='challenge-translate-input']") {
+        let translateInput = document.querySelector(selector);
         if (!translateInput) return;
 
         reactUtils.getReactFiber(translateInput)?.pendingProps?.onChange({target: {value: translation}})
