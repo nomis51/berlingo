@@ -1,6 +1,6 @@
 ﻿‎
 
-#### <img src="../../images/brave.png" style="height: 40px; width: auto;"> Brave
+#### <img src="./images/brave.png" style="height: 40px; width: auto;"> Brave
 
 - Top right corner of the browser, click on the "hamburger" icon
 - Click on "Extensions"
