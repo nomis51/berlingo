@@ -1,6 +1,6 @@
 ﻿‎
 
-#### <img src="./images/opera-gx.png" style="height: 40px; width: auto;"> Opera GX
+#### <img src="../images/opera-gx.png" style="height: 40px; width: auto;"> Opera GX
 
 - Top right corner of the browser, click on the "settings" icon
 - Click on "Extensions"
