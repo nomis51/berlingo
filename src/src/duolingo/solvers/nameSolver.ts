@@ -50,10 +50,10 @@ export class NameSolver extends Solver {
             if (!translateInput) return resolve();
 
             const fiber = ReactService.getReactFiber(translateInput);
-            console.log(fiber)
             if (!fiber) return resolve();
 
-            fiber.return?.stateNode?.onChange({target: {value: answer}});
+            fiber.pendingProps?.onChange({target: {value: answer}});
+            resolve();
         });
     }
 }
